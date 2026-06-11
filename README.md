@@ -9,6 +9,8 @@
 
 A full-stack campus event management platform. Students discover and RSVP to events, participate in discussions, and track their activity — while admins manage events and monitor engagement from a dedicated dashboard.
 
+**[View Screenshots →](SCREENSHOTS.md)**
+
 </div>
 
 ---
@@ -17,70 +19,7 @@ A full-stack campus event management platform. Students discover and RSVP to eve
 
 Campus Connect is built around two distinct user roles. Students get a personalized feed of campus events with filtering, an RSVP system, a comment thread per event for Q&A, a calendar view, and a profile page. Admins get full CRUD over events, a dashboard with engagement metrics, and a directory of all registered students.
 
-The app uses JWT-based authentication so sessions persist across page refreshes without a backend session store. Passwords are hashed with bcryptjs before storage. Profile picture uploads are handled server-side by Multer and served as static files. The frontend supports a dark and light theme, with preference saved to localStorage.
-
----
-
-## Screenshots
-
-### Authentication
-![Login](screenshots/login.png)
-> Role-based login screen — students and admins authenticate through the same form with separate role selection.
-
----
-
-### Student View
-
-| Dashboard | Events |
-|-----------|--------|
-| ![Student Dashboard](screenshots/student-dashboard.png) | ![Events Page](screenshots/events-page.png) |
-
-**Dashboard** shows personalized stats — attended events, upcoming RSVPs, and total events available to explore.  
-**Events page** supports full-text search across title, location, and tags, with time filters (Upcoming, Today, Week, Month, Past).
-
-| Event Discussion | Calendar |
-|-----------------|----------|
-| ![Discussion](screenshots/event-discussion.png) | ![Calendar](screenshots/calendar.png) |
-
-**Each event card** expands to show a Q&A discussion thread where students can post questions and comments.  
-**Calendar view** maps all events onto an interactive monthly calendar using react-big-calendar.
-
-| Profile & Settings |
-|--------------------|
-| ![Profile](screenshots/profile-student.png) |
-
-Students can upload a profile picture, update their display name, change their password, and toggle between dark and light mode.
-
----
-
-### Admin View
-
-| Admin Dashboard | Create Event |
-|----------------|-------------|
-| ![Admin Dashboard](screenshots/admin-dashboard.png) | ![Create Event](screenshots/admin-create-event.png) |
-
-**Admin dashboard** shows platform-wide stats — total events created, total RSVPs across all events, and average RSVPs per event.  
-**Create event form** lets admins add a title, description, date, location, and comma-separated tags.
-
-| User Directory |
-|---------------|
-| ![User Directory](screenshots/admin-user-directory.png) |
-
-Admins can browse all registered students, their emails, roles, and how many events they've RSVP'd to.
-
----
-
-### Database — MongoDB Compass
-
-| Collections Overview | Events Collection |
-|---------------------|------------------|
-| ![DB Collections](screenshots/db-collections.png) | ![DB Events](screenshots/db-events.png) |
-
-| Users Collection | Comments Collection |
-|-----------------|-------------------|
-| ![DB Users](screenshots/db-users.png) | ![DB Comments](screenshots/db-comments.png) |
-
-The database has three collections — `users`, `events`, and `comments`. Comments reference both a user and an event by ObjectId, so deleting an event also cascades to remove its associated comments. Passwords are stored as bcrypt hashes — visible in the users collection above.
+The app uses JWT-based authentication so sessions persist across page refreshes without a backend session store. Passwords are hashed with bcryptjs before storage. Profile picture uploads are handled server-side by Multer and served as static files. The frontend supports a dark and light theme, with the preference saved to localStorage.
 
 ---
 
@@ -130,7 +69,7 @@ campus-connect/
 │       ├── App.css                # Dark theme
 │       └── light-theme.css        # Light theme overrides
 │
-├── screenshots/                   # UI screenshots for documentation
+├── screenshots/                   # UI and database screenshots
 ├── .gitignore
 ├── package.json                   # Root scripts using concurrently
 └── README.md
