@@ -21,6 +21,69 @@ The app uses JWT-based authentication so sessions persist across page refreshes 
 
 ---
 
+## Screenshots
+
+### Authentication
+![Login](screenshots/login.png)
+> Role-based login screen — students and admins authenticate through the same form with separate role selection.
+
+---
+
+### Student View
+
+| Dashboard | Events |
+|-----------|--------|
+| ![Student Dashboard](screenshots/student-dashboard.png) | ![Events Page](screenshots/events-page.png) |
+
+**Dashboard** shows personalized stats — attended events, upcoming RSVPs, and total events available to explore.  
+**Events page** supports full-text search across title, location, and tags, with time filters (Upcoming, Today, Week, Month, Past).
+
+| Event Discussion | Calendar |
+|-----------------|----------|
+| ![Discussion](screenshots/event-discussion.png) | ![Calendar](screenshots/calendar.png) |
+
+**Each event card** expands to show a Q&A discussion thread where students can post questions and comments.  
+**Calendar view** maps all events onto an interactive monthly calendar using react-big-calendar.
+
+| Profile & Settings |
+|--------------------|
+| ![Profile](screenshots/profile-student.png) |
+
+Students can upload a profile picture, update their display name, change their password, and toggle between dark and light mode.
+
+---
+
+### Admin View
+
+| Admin Dashboard | Create Event |
+|----------------|-------------|
+| ![Admin Dashboard](screenshots/admin-dashboard.png) | ![Create Event](screenshots/admin-create-event.png) |
+
+**Admin dashboard** shows platform-wide stats — total events created, total RSVPs across all events, and average RSVPs per event.  
+**Create event form** lets admins add a title, description, date, location, and comma-separated tags.
+
+| User Directory |
+|---------------|
+| ![User Directory](screenshots/admin-user-directory.png) |
+
+Admins can browse all registered students, their emails, roles, and how many events they've RSVP'd to.
+
+---
+
+### Database — MongoDB Compass
+
+| Collections Overview | Events Collection |
+|---------------------|------------------|
+| ![DB Collections](screenshots/db-collections.png) | ![DB Events](screenshots/db-events.png) |
+
+| Users Collection | Comments Collection |
+|-----------------|-------------------|
+| ![DB Users](screenshots/db-users.png) | ![DB Comments](screenshots/db-comments.png) |
+
+The database has three collections — `users`, `events`, and `comments`. Comments reference both a user and an event by ObjectId, so deleting an event also cascades to remove its associated comments. Passwords are stored as bcrypt hashes — visible in the users collection above.
+
+---
+
 ## Tech Stack
 
 | Layer | Technology | Why |
@@ -37,32 +100,12 @@ The app uses JWT-based authentication so sessions persist across page refreshes 
 
 ---
 
-## Features
-
-**Students**
-- Register and log in with role-based access
-- Browse events with search and time filters (Today, This Week, This Month, Past)
-- RSVP to events and track enrollment history on the home dashboard
-- Comment on events for Q&A
-- View all events on an interactive calendar
-- Update display name, password, and profile picture
-- Toggle between dark and light mode
-
-**Admins**
-- Create events with title, description, date, location, and tags
-- Edit and delete events
-- View the full list of students enrolled in each event
-- Dashboard showing total events, total RSVPs, and average RSVPs per event
-- Browse all registered users on the Explore page
-
----
-
 ## Project Structure
 
 ```
 campus-connect/
 ├── backend/
-│   ├── server.js              # Express app — schemas, routes, middleware
+│   ├── server.js              # All routes, schemas, middleware
 │   ├── uploads/               # Stored profile pictures (git-ignored)
 │   ├── .env.example
 │   └── package.json
@@ -87,6 +130,7 @@ campus-connect/
 │       ├── App.css                # Dark theme
 │       └── light-theme.css        # Light theme overrides
 │
+├── screenshots/                   # UI screenshots for documentation
 ├── .gitignore
 ├── package.json                   # Root scripts using concurrently
 └── README.md
@@ -111,11 +155,11 @@ cd Campus-Connect
 
 ### 2. Configure environment variables
 
-**Backend** — copy the template and fill in your values:
+**Backend:**
 
 ```bash
 cd backend
-cp .env.example .env   # use 'copy' on Windows
+cp .env.example .env
 ```
 
 ```env
@@ -125,11 +169,11 @@ PORT=5000
 FRONTEND_ORIGIN=http://localhost:3000
 ```
 
-**Frontend** — copy the template:
+**Frontend:**
 
 ```bash
 cd ../frontend
-cp .env.example .env   # use 'copy' on Windows
+cp .env.example .env
 ```
 
 ```env
@@ -137,8 +181,6 @@ REACT_APP_API_BASE=http://localhost:5000
 ```
 
 ### 3. Install dependencies
-
-From the project root, this installs both frontend and backend in one command:
 
 ```bash
 cd ..
@@ -151,7 +193,7 @@ npm run install:all
 npm run dev
 ```
 
-This runs the backend on `http://localhost:5000` and the frontend on `http://localhost:3000` concurrently. Open the frontend URL in your browser.
+This runs the backend on `http://localhost:5000` and the frontend on `http://localhost:3000` concurrently.
 
 To run them separately:
 
