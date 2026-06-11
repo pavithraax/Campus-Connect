@@ -1,203 +1,193 @@
-# 🎓 Campus Connect
+<div align="center">
 
-A full-stack web application that connects students and administrators around campus events. Students can discover events, RSVP, and join discussions. Admins can create, edit, and manage events and track engagement.
+# Campus Connect
 
-![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
-![Node.js](https://img.shields.io/badge/Node.js-Express-green?logo=node.js)
-![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47A248?logo=mongodb)
-![JWT](https://img.shields.io/badge/Auth-JWT-orange)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev/)
+[![Node.js](https://img.shields.io/badge/Node.js-Express_5-339933?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47A248?style=flat-square&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![JWT](https://img.shields.io/badge/Auth-JWT-FB015B?style=flat-square&logo=jsonwebtokens&logoColor=white)](https://jwt.io/)
 
----
+A full-stack campus event management platform. Students discover and RSVP to events, participate in discussions, and track their activity — while admins manage events and monitor engagement from a dedicated dashboard.
 
-## ✨ Features
+**[View Screenshots →](SCREENSHOTS.md)**
 
-### Students
-- 🔐 Register and log in as a **Student**
-- 📅 Browse all campus events with search and filters (Today / This Week / This Month / Past)
-- ✅ **RSVP** to events and track enrolled vs. attended events
-- 💬 Join **Q&A discussions** on each event via comments
-- 🗓️ View all events on an interactive **Calendar**
-- 👤 Update profile name, password, and profile picture
-- 🌗 Toggle **dark / light mode**
-
-### Admins
-- 🛠️ Log in as **Admin**
-- ➕ **Create** events with title, description, date, location, and tags
-- ✏️ **Edit** and 🗑️ **Delete** events
-- 👥 View enrolled student list per event
-- 📊 Dashboard overview — total events, total RSVPs, average RSVPs per event
-- 🔍 Explore page to view all registered users
+</div>
 
 ---
 
-## 🛠️ Tech Stack
+## Overview
 
-| Layer     | Technology                                      |
-|-----------|-------------------------------------------------|
-| Frontend  | React 19, Framer Motion, react-big-calendar     |
-| Styling   | Custom CSS (dark/light theme), Lucide icons     |
-| Backend   | Node.js, Express 5                              |
-| Database  | MongoDB with Mongoose ODM                       |
-| Auth      | JWT (JSON Web Tokens) + bcryptjs                |
-| Uploads   | Multer (profile picture storage)                |
-| Toasts    | react-hot-toast                                 |
+Campus Connect is built around two distinct user roles. Students get a personalized feed of campus events with filtering, an RSVP system, a comment thread per event for Q&A, a calendar view, and a profile page. Admins get full CRUD over events, a dashboard with engagement metrics, and a directory of all registered students.
+
+The app uses JWT-based authentication so sessions persist across page refreshes without a backend session store. Passwords are hashed with bcryptjs before storage. Profile picture uploads are handled server-side by Multer and served as static files. The frontend supports a dark and light theme, with the preference saved to localStorage.
 
 ---
 
-## 🚀 Getting Started
+## Tech Stack
 
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) v18 or higher
-- [MongoDB](https://www.mongodb.com/try/download/community) running locally **or** a [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) cluster
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/<your-username>/campus-connect.git
-cd campus-connect
-```
-
-### 2. Configure environment variables
-
-**Backend:**
-```bash
-cd backend
-cp .env.example .env
-# Open .env and set your MONGO_URI and JWT_SECRET
-```
-
-**Frontend:**
-```bash
-cd frontend
-cp .env.example .env
-# Set REACT_APP_API_BASE=http://localhost:5000 (default)
-```
-
-### 3. Install dependencies
-
-From the **project root**:
-```bash
-npm run install:all
-```
-
-Or manually:
-```bash
-cd backend && npm install
-cd ../frontend && npm install
-```
-
-### 4. Run the app
-
-**Option A — Run both together (recommended):**
-```bash
-# From project root
-npm run dev
-```
-
-**Option B — Run separately:**
-```bash
-# Terminal 1 — Backend (http://localhost:5000)
-cd backend && npm run dev
-
-# Terminal 2 — Frontend (http://localhost:3000)
-cd frontend && npm start
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+| Layer | Technology | Why |
+|---|---|---|
+| Frontend | React 19 | Component-based UI with hooks |
+| Animations | Framer Motion | Page transitions and card animations |
+| Calendar | react-big-calendar | Interactive monthly/weekly event view |
+| Styling | Custom CSS — dark + light themes | Full design control, no component library |
+| Backend | Node.js + Express 5 | Lightweight REST API |
+| Database | MongoDB + Mongoose | Flexible document model for events and users |
+| Auth | JWT + bcryptjs | Stateless sessions, secure password storage |
+| File Uploads | Multer | Profile picture handling with type validation |
+| Notifications | react-hot-toast | Non-blocking in-app feedback |
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 campus-connect/
 ├── backend/
-│   ├── server.js          # Express app — all routes, schemas, middleware
-│   ├── uploads/           # Profile picture storage (git-ignored)
-│   ├── .env.example       # Environment variable template
+│   ├── server.js              # All routes, schemas, middleware
+│   ├── uploads/               # Stored profile pictures (git-ignored)
+│   ├── .env.example
 │   └── package.json
 │
 ├── frontend/
-│   ├── public/
 │   └── src/
 │       ├── components/
-│       │   ├── Navbar.jsx         # Navigation with active-link highlight
-│       │   ├── EventCard.jsx      # Event card with RSVP, comments
-│       │   ├── EventForm.jsx      # Admin create/edit form
-│       │   ├── CommentSection.jsx # Q&A discussion per event
+│       │   ├── Navbar.jsx         # Navigation bar with active page highlight
+│       │   ├── EventCard.jsx      # Event card with RSVP and comment toggle
+│       │   ├── EventForm.jsx      # Admin form for creating and editing events
+│       │   ├── CommentSection.jsx # Per-event comment thread
 │       │   └── Loader.jsx
 │       ├── pages/
-│       │   ├── HomePage.jsx       # Dashboard (student stats / admin overview)
-│       │   ├── EventPage.jsx      # Event list with search & filters
-│       │   ├── ExplorePage.jsx    # Trending events / User directory (admin)
+│       │   ├── HomePage.jsx       # Dashboard — student stats or admin overview
+│       │   ├── EventPage.jsx      # Event list with search and filters
+│       │   ├── ExplorePage.jsx    # Trending events (student) / user directory (admin)
 │       │   ├── CalendarPage.jsx   # Calendar view of all events
-│       │   └── ProfilePage.jsx    # Profile settings
+│       │   └── ProfilePage.jsx    # Profile settings and picture upload
 │       ├── utils/
-│       │   └── api.js             # Centralised fetch wrapper
-│       ├── App.jsx                # Root component, auth, routing state
-│       ├── App.css                # Dark theme styles
+│       │   └── api.js             # Fetch wrapper that attaches JWT headers
+│       ├── App.jsx                # Root — auth state, routing, theme
+│       ├── App.css                # Dark theme
 │       └── light-theme.css        # Light theme overrides
 │
+├── screenshots/                   # UI and database screenshots
 ├── .gitignore
-├── package.json           # Root scripts (dev, install:all)
+├── package.json                   # Root scripts using concurrently
 └── README.md
 ```
 
 ---
 
-## 🔌 API Reference
+## Getting Started
 
-### Auth
-| Method | Endpoint       | Description             | Auth |
-|--------|---------------|-------------------------|------|
-| POST   | `/api/signup` | Register a new user     | No   |
-| POST   | `/api/login`  | Login and get JWT token | No   |
+### Prerequisites
 
-### Events
-| Method | Endpoint                   | Description               | Auth   |
-|--------|---------------------------|---------------------------|--------|
-| GET    | `/api/events`             | Get all events (populated)| No     |
-| POST   | `/api/events/create`      | Create event              | Admin  |
-| PUT    | `/api/events/:id`         | Edit event                | Admin  |
-| DELETE | `/api/events/:id`         | Delete event + comments   | Admin  |
-| POST   | `/api/events/:id/rsvp`    | RSVP to event             | Student|
-| DELETE | `/api/events/:id/rsvp`    | Cancel RSVP               | Student|
-| POST   | `/api/events/:id/comment` | Post a comment            | Any    |
+- [Node.js](https://nodejs.org/) v18 or above
+- [MongoDB](https://www.mongodb.com/try/download/community) running locally, or a [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) connection string
+- [Git](https://git-scm.com/)
 
-### Profile
-| Method | Endpoint                | Description              | Auth |
-|--------|------------------------|--------------------------|------|
-| GET    | `/api/users`           | List all students        | Admin|
-| PUT    | `/api/profile/name`    | Update display name      | Any  |
-| PUT    | `/api/profile/password`| Change password          | Any  |
-| POST   | `/api/profile/picture` | Upload profile picture   | Any  |
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/pavithraax/Campus-Connect.git
+cd Campus-Connect
+```
+
+### 2. Configure environment variables
+
+**Backend:**
+
+```bash
+cd backend
+cp .env.example .env
+```
+
+```env
+MONGO_URI=mongodb://127.0.0.1:27017/campus-connect
+JWT_SECRET=your_long_random_secret_here
+PORT=5000
+FRONTEND_ORIGIN=http://localhost:3000
+```
+
+**Frontend:**
+
+```bash
+cd ../frontend
+cp .env.example .env
+```
+
+```env
+REACT_APP_API_BASE=http://localhost:5000
+```
+
+### 3. Install dependencies
+
+```bash
+cd ..
+npm run install:all
+```
+
+### 4. Start the development server
+
+```bash
+npm run dev
+```
+
+This runs the backend on `http://localhost:5000` and the frontend on `http://localhost:3000` concurrently.
+
+To run them separately:
+
+```bash
+# Terminal 1
+cd backend && npm run dev
+
+# Terminal 2
+cd frontend && npm start
+```
 
 ---
 
-## 🐛 Bug Fixes (from original code)
+## API Reference
 
-| # | Bug | Fix Applied |
-|---|-----|-------------|
-| 1 | `event.location.toLowerCase()` crash when location is `null` | Added `(event.location \|\| "")` guard in EventPage search filter |
-| 2 | RSVP check used `r.id` / `r._id` inconsistently, causing enrolled state to never match | Unified to `r?._id?.toString() === currentUserId?.toString()` |
-| 3 | Auth login card was pushed under navbar due to `margin-top: 100px` on `<main>` | Separated auth and dashboard layouts — auth uses flex-center, dashboard uses `.page-content` |
-| 4 | `backend/uploads/` directory not created at startup — multer crashes on first upload | Added `fs.mkdirSync` with `{ recursive: true }` at server startup |
-| 5 | Deleting an event left orphaned Comment documents in the database | `Comment.deleteMany({ event: eventId })` called before event deletion |
-| 6 | Empty 3rd email `<a href="mailto:">` in ProfilePage contact section | Removed empty entry |
-| 7 | No file type validation on profile picture upload | Added `mimetype.startsWith('image/')` filter in multer config |
-| 8 | No password length validation before hashing | Added `minLength: 6` check on both client and server |
+Base URL: `http://localhost:5000`
+
+**Auth**
+
+| Method | Endpoint | Description | Auth |
+|---|---|---|---|
+| POST | `/api/signup` | Register a new student or admin account | None |
+| POST | `/api/login` | Authenticate and receive a JWT | None |
+
+**Events**
+
+| Method | Endpoint | Description | Role |
+|---|---|---|---|
+| GET | `/api/events` | Fetch all events with RSVP and comment data | Public |
+| POST | `/api/events/create` | Create a new event | Admin |
+| PUT | `/api/events/:id` | Update an event | Admin |
+| DELETE | `/api/events/:id` | Delete an event and its associated comments | Admin |
+| POST | `/api/events/:id/rsvp` | RSVP to an event | Student |
+| DELETE | `/api/events/:id/rsvp` | Cancel an RSVP | Student |
+| POST | `/api/events/:id/comment` | Post a comment on an event | Any |
+
+**Profile**
+
+| Method | Endpoint | Description | Role |
+|---|---|---|---|
+| GET | `/api/users` | List all registered students | Admin |
+| PUT | `/api/profile/name` | Update display name | Any |
+| PUT | `/api/profile/password` | Change password | Any |
+| POST | `/api/profile/picture` | Upload a profile picture | Any |
 
 ---
 
-## 👥 Team
+## Team
 
-- **Aarya Tedla** — aaryatedla@gmail.com
-- **Pavithraa** — pavithraa2007@gmail.com
-- **Mathur** — 9019969870
+| Name | Contact |
+|---|---|
+| Aarya Tedla | aaryatedla@gmail.com |
+| Pavithraa | pavithraa2007@gmail.com |
+| Tanisha Mathur | 9019969870 |
 
 ---
 
-## 📄 License
-
-This project is for educational purposes. All rights reserved by the team.
+*Built as a full-stack engineering project. For educational use.*
